@@ -24,43 +24,6 @@ BOOKMAKERS = {
     "1xBet": 36,
 }
 
-
-def _get(endpoint: str, params: dict = {}) -> list:
-    try:
-        resp = requests.get(
-            f"{API_BASE}/{endpoint}",
-            headers=HEADERS,
-            params=params,
-            timeout=10,
-        )
-        resp.raise_for_status()
-        data = resp.json()
-        if data.get("errors"):
-            logger.error(f"API errors: {data['errors']}")
-            return []
-        return data.get("response", [])
-    except requests.exceptions.Timeout:
-        logger.error("API request timed out")
-        return []
-    except requests.exceptions.RequestException as e:
-        logger.error(f"API request failed: {e}")
-        return []
-
-
-def get_fixtures_by_league(league_id: int, season: int = 2024) -> list:
-    today = date.today().isoformat()
-    return _get("fixtures", {"league": league_id, "season": season, "date": today})
-
-
-def get_fixtures_by_team(team_id: int, season: int = 2024, next: int = 5) -> list:
-    return _get("fixtures", {"team": team_id, "season": season, "next": next})
-
-
-def get_fixture_by_id(fixture_id: int) -> dict:
-    results = _get("fixtures", {"id": fixture_id})
-    return results[0] if results else {}
-
-
 def get_h2h(team1_id: int, team2_id: int, last: int = 5) -> list:
     return _get("fixtures/headtohead", {"h2h": f"{team1_id}-{team2_id}", "last": last})
 
