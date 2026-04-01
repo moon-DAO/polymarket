@@ -1,0 +1,13 @@
+app = "sports-betting-bot"
+primary_region = "sin"  # Singapore — closest to India
+
+[build]
+
+[env]
+  # Non-secret env vars go here (secrets go via fly secrets set)
+
+[[services]]
+  # No HTTP service needed — this is a background worker bot
+
+[processes]
+  app = "python bot.py"
