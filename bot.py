@@ -19,7 +19,7 @@ from api import (
 )
 from analysis import analyze_match
 from formatter import format_fixture_list, format_analysis, format_search_results
-
+# v2.0
 logging.basicConfig(
     format="%(asctime)s | %(levelname)s | %(message)s",
     level=logging.INFO,
